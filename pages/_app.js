@@ -1,7 +1,19 @@
-import 'tailwindcss/tailwind.css'
+import React, { useState } from "react";
+import "tailwindcss/tailwind.css";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import configureStore from "../config/store";
+const { store, persistor } = configureStore();
 
-export default MyApp
+const MyApp = ({ Component, pageProps }) => {
+	return (
+		<Provider store={store}>
+			<PersistGate persistor={persistor}>
+				<Component {...pageProps} />
+			</PersistGate>
+		</Provider>
+	);
+};
+
+export default MyApp;

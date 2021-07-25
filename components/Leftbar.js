@@ -6,13 +6,20 @@ import {
 	IoMdSend,
 	IoMdDocument,
 	IoMdTrash,
+	IoIosArrowBack,
+	IoIosArrowForward,
 } from "react-icons/io";
 import Router from "next/router";
 import { MdSend } from "react-icons/md";
 import { AiFillStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import Calendar from "./Calendar";
+import dayjs from "dayjs";
 
 const Leftbar = () => {
+	// 나중에 redux에서 전역으로 관리해보기.
+	const [selectDate, setSelectDate] = useState(dayjs());
+
 	const [hoverMenu, setHoverMenu] = useState(0);
 	const [isLongSide, setIsLongSide] = useState(true);
 
@@ -31,6 +38,11 @@ const Leftbar = () => {
 	// 	Router.push("/main");
 	// 	onRefresh();
 	// };
+
+	const ManipulateMonth = (num) => {
+		if (num === 1) setSelectDate(selectDate.add(1, "month"));
+		else setSelectDate(selectDate.subtract(1, "month"));
+	};
 
 	return (
 		<div
@@ -59,7 +71,30 @@ const Leftbar = () => {
 					)}
 				</div>
 			</div>
-			<div class="w-full flex flex-col pb-4 border-b-2 border-gray-100"></div>
+			<div class="w-full flex flex-col pb-4 border-b-2 border-gray-100">
+				<div class="w-full mx-4 px-2 h-56 border border-black">
+					<div class="w-full flex justify-between flex-row items-center">
+						<div class="text-sm font-semibold">
+							{selectDate.format("YYYY년 M월")}
+						</div>
+						<div class="flex flex-row">
+							<IoIosArrowBack
+								size={35}
+								color={"#5f6368"}
+								onClick={() => ManipulateMonth(-1)}
+								class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+							/>
+							<IoIosArrowForward
+								size={35}
+								color={"#5f6368"}
+								onClick={() => ManipulateMonth(1)}
+								class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+							/>
+						</div>
+					</div>
+					<Calendar date={selectDate} />
+				</div>
+			</div>
 		</div>
 	);
 };

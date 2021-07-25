@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { FiMenu, FiUserPlus } from "react-icons/fi";
-import { IoMdSearch, IoMdOptions } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { HiOutlineCamera } from "react-icons/hi";
 
 import gmailLogo from "../public/image/gmailLogo.png";
@@ -50,10 +50,11 @@ const navbar = () => {
 	// };
 
 	return (
-		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 ">
+		<div class="h-30 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 ">
 			<div class="w-64 mr-2 pr-4 pl-4 flex flex-row items-center flex-shrink-0">
 				<FiMenu
 					size={36}
+					color={"#5f6368"}
 					class="mr-6 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
 					// onClick={onToggleSidebar}
 				/>
@@ -67,24 +68,23 @@ const navbar = () => {
 				/>
 				<h1 class="ml-4 text-xl text-gray-600">캘린더</h1>
 			</div>
-			<div class="w-full flex my-2 flex-row">
-				<div class="flex-1 max-w-screen-md h-15 flex flex-row justify-between items-center rounded-md bg-gray-100 border border-gray-100">
-					<IoMdSearch
-						size={42}
-						color={"#5f6368"}
-						class="mx-3 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-					/>
-					<input
-						type="text"
-						class="w-full h-13 py-2 bg-gray-100 border outline-none border-gray-100 text-left text-#5f6368"
-						placeholder="메일 검색"
-					/>
-					<IoMdOptions
-						size={42}
-						color={"#5f6368"}
-						class="mx-3 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-					/>
+			<div class="w-full flex my-2 flex-row items-center">
+				<div class="my-2 flex justify-center items-center">
+					<button class="px-3 py-1.5 border border-gray-300 rounded-md text-sm">
+						오늘
+					</button>
 				</div>
+				<IoIosArrowBack
+					size={35}
+					color={"#5f6368"}
+					class="ml-3 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+				/>
+				<IoIosArrowForward
+					size={35}
+					color={"#5f6368"}
+					class="mr-3 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+				/>
+				<label class="text-xl p-2">2021년 7월</label>
 			</div>
 			{/* <div ref={profileRef} class="relative ml-8 z-30">
 				{user && (
