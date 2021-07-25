@@ -6,11 +6,15 @@ import Router from "next/router";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import "tailwindcss/tailwind.css";
+import Elephant from "../public/image/elephant.jpg";
+import Giraffe from "../public/image/giraffe.jpg";
+import Dog1 from "../public/image/dog1.jpeg";
+import Dog2 from "../public/image/dog2.jpg";
 
 export default function login() {
 	// const dispatch = useDispatch();
 
-	const googleLogin = async function () {
+	const enterMain = async function () {
 		// const login_payload = {
 		// 	uuid: "bRPleP6CYGMgNqWTEFzjdEpAQYZ2",
 		// 	email: "peration0422@gmail.com",
@@ -21,7 +25,8 @@ export default function login() {
 		// 	myThread: {},
 		// 	temp: [],
 		// };
-		// Router.push("/init");
+
+		Router.push("/main");
 	};
 
 	return (
@@ -47,45 +52,56 @@ export default function login() {
 					<p class="mb-8">Google 계정 사용</p>
 					<div class="w-full mb-8 relative flex justify-center flex-col">
 						<div
-							class="border p-4 mb-8 w-96 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={googleLogin}
+							class="border px-4 py-3 mb-0 w-96 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+							onClick={enterMain}
 						>
 							<Image
-								src={Logo2}
+								src={Dog1}
 								width={40}
-								height={30}
-								class="flex-1"
+								height={40}
+								class="flex-1 rounded-full object-cover"
 								alt="Picture of the author"
 							/>
-							<div class="w-full flex-shrink text-center">
-								기본 계정으로 로그인
-							</div>
+							<div class="w-full flex-shrink text-center">Tom으로 로그인</div>
 						</div>
 						<div
-							class="border p-3 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={() => alert("본인 계정으로 진행해주세요.")}
+							class="border px-4 py-3 w-96 mb-0 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+							onClick={enterMain}
 						>
-							<img
-								src="https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c"
+							<Image
+								src={Dog2}
 								width={40}
-								height={30}
-								class="flex-1 rounded-full"
+								height={40}
+								class="flex-1 rounded-full object-cover"
 								alt="Picture of the author"
 							/>
-							<div class="w-full flex-shrink text-center">Puppy로 로그인</div>
+							<div class="w-full flex-shrink text-center">Steve로 로그인</div>
 						</div>
 						<div
-							class="border p-3 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={() => alert("본인 계정으로 진행해주세요.")}
+							class="border px-4 py-3 w-96 mb-0 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+							onClick={enterMain}
 						>
-							<img
-								src="https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c"
+							<Image
+								src={Giraffe}
 								width={40}
-								height={30}
-								class="flex-1 rounded-full"
+								height={40}
+								class="flex-1 rounded-full object-cover"
 								alt="Picture of the author"
 							/>
-							<div class="w-full flex-shrink text-center">Puppy로 로그인</div>
+							<div class="w-full flex-shrink text-center">Pery로 로그인</div>
+						</div>
+						<div
+							class="border px-4 py-3 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+							onClick={enterMain}
+						>
+							<Image
+								src={Elephant}
+								width={40}
+								height={40}
+								class="flex-1 rounded-full object-cover"
+								alt="Picture of the author"
+							/>
+							<div class="w-full flex-shrink text-center">Bucky로 로그인</div>
 						</div>
 						<div class="w-96 mx-12 text-left mb-8">
 							내 컴퓨터가 아닌가요? 게스트 모드를 사용하여 비공개로
