@@ -8,19 +8,19 @@ import Calendar_Week from "./Calendar_Week";
 
 const Calendar = (props) => {
 	const selectDate = props.date;
-	console.log("selectDate", selectDate);
+	console.log(selectDate);
 
 	return (
 		<table class="w-full">
 			<thead>
-				<tr class="w-56 text-xs font-light text-gray-500 flex flex-row justify-start">
-					<th class="flex-grow-1 w-8">일</th>
-					<th class="flex-grow-1 w-8">월</th>
-					<th class="flex-grow-1 w-8">화</th>
-					<th class="flex-grow-1 w-8">수</th>
-					<th class="flex-grow-1 w-8">목</th>
-					<th class="flex-grow-1 w-8">금</th>
-					<th class="flex-grow-1 w-8">토</th>
+				<tr class="w-full text-xs font-light text-gray-500 flex flex-row justify-between">
+					<th class="flex-grow-1 w-6 h-6">일</th>
+					<th class="flex-grow-1 w-6 h-6">월</th>
+					<th class="flex-grow-1 w-6 h-6">화</th>
+					<th class="flex-grow-1 w-6 h-6">수</th>
+					<th class="flex-grow-1 w-6 h-6">목</th>
+					<th class="flex-grow-1 w-6 h-6">금</th>
+					<th class="flex-grow-1 w-6 h-6">토</th>
 				</tr>
 			</thead>
 			<tbody class="">

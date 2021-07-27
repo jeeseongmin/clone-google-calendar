@@ -32,7 +32,7 @@ export default function login() {
 	return (
 		<>
 			<Head>
-				<title>gmail-clone login</title>
+				<title>google calendar login</title>
 				<meta
 					name="google-site-verification"
 					content="5OoTdfiuCbpvW90pjrj64IgiDszvnTSYT0qm9PUEluY"

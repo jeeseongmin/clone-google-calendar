@@ -7,8 +7,6 @@ const Calendar_Week = (props) => {
 	const [week, setWeek] = useState([]);
 	const _week = props.week;
 	const _date = props.date;
-	console.log("week", _week);
-	console.log("date", _date);
 
 	// 주차별
 	useEffect(() => {
@@ -28,9 +26,9 @@ const Calendar_Week = (props) => {
 	}, []);
 
 	return (
-		<tr class="mt-2 w-56 text-xs font-light text-gray-500 flex flex-row justify-start">
+		<tr class=" w-56 text-xs font-light text-gray-500 flex flex-row justify-between">
 			{week.map((element, index) => {
-				return <Calendar_Day obj={element} />;
+				return <Calendar_Day obj={element} key={element.day} />;
 			})}
 		</tr>
 	);

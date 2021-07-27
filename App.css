@@ -1,0 +1,83 @@
+.customInputWrapper {
+	position: relative;
+	border: 2px solid black !important;
+	height: 32px;
+}
+
+/* 기본 css */
+.customInput {
+	outline: none;
+	font-size: 16px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 16px;
+	padding-right: 16px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-top-width: 0px;
+	border-radius: 2px;
+	font-size: 0.8rem;
+	color: black;
+	width: 100%;
+}
+
+/* default는 회색 계열에 높이 2px를 가진 선이다. */
+/* 그냥 기본 bottom Line을 가리킨다. */
+.customInputDefaultBottomBorder {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 2px;
+	background-color: rgba(0, 0, 0, 0.05);
+	width: 100%;
+	transition: 0.2s all linear;
+}
+
+.white {
+	background-color: white;
+}
+
+.gray {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* 
+    focus 되기 전에 left:50%를 통해서 선의 시작점이 중심이 된다.
+    그리고 transform : translateX를 통해 선 자체가 다시 -50%이 됨에 따라 
+    선이 되돌아 오지만 중심은 정가운데 있게 된다.
+    현재는 width가 0으로 점의 형태로 보면 된다.
+*/
+.customInputBottomBorder {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 2px;
+	background-color: rgba(0, 0, 0, 0.05);
+	transform: translateX(-50%);
+	left: 50%;
+	transition: 0.2s all linear;
+}
+.customInputBottomBorder_active {
+	background-color: #4285f4;
+	animation-duration: 0.3s;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+	animation-name: underline;
+}
+
+@keyframes underline {
+	0% {
+		width: 0;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+@keyframes showModal {
+	0% {
+	}
+	100% {
+	}
+}
