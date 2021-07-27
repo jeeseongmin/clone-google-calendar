@@ -103,28 +103,12 @@ const navbar = () => {
 	};
 
 	const changeFocusDate = (type) => {
-		if (type === -1) {
-			if (viewType === "Year") {
-				dispatch(updateFocusDate(focusDate.subtract(1, "year")));
-			} else if (viewType === "Month") {
-				dispatch(updateFocusDate(focusDate.subtract(1, "month")));
-			} else if (viewType === "Week") {
-				dispatch(updateFocusDate(focusDate.subtract(7, "day")));
-			} else if (viewType === "Day") {
-				dispatch(updateFocusDate(focusDate.subtract(1, "day")));
-			}
-		} else if (type === 1) {
-			if (viewType === "Year") {
-				dispatch(updateFocusDate(focusDate.add(1, "year")));
-			} else if (viewType === "Month") {
-				dispatch(updateFocusDate(focusDate.add(1, "month")));
-			} else if (viewType === "Week") {
-				dispatch(updateFocusDate(focusDate.add(7, "day")));
-			} else if (viewType === "Day") {
-				dispatch(updateFocusDate(focusDate.add(1, "day")));
-			}
-		}
-		dispatch(updateLeftbarDate(focusDate));
+		const num = viewType === "Week" ? 7 : 1;
+		const view = viewType === "Week" ? "Day" : viewType;
+		const payload =
+			type === 1 ? focusDate.add(num, view) : focusDate.subtract(num, view);
+		dispatch(updateFocusDate(payload));
+		dispatch(updateLeftbarDate(payload));
 	};
 
 	const logOut = () => {
@@ -136,12 +120,10 @@ const navbar = () => {
 
 	const onOptionClick = (text) => {
 		const cp = [...option];
-		console.log(cp);
 		if (cp.includes(text)) {
 			const newCp = cp.filter(function (element, index) {
 				return element != text;
 			});
-			console.log("1", newCp);
 			dispatch(updateOption(newCp));
 		} else {
 			cp.push(text);
@@ -189,10 +171,10 @@ const navbar = () => {
 					color={"#5f6368"}
 					class="mr-3 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
 				/>
-				<label class="text-xl p-2">{dateText}</label>
+				<label class="text-xl p-2 select-none">{dateText}</label>
 			</div>
 
-			<div ref={viewRef} class="h-full relative mr-16">
+			<div ref={viewRef} class="h-full relative mr-16 select-none">
 				<button
 					onClick={onToggleViewModal}
 					class="pl-3 p-1 cursor-pointer rounded-md flex flex-row items-center justify-center border border-gray-200 hover:bg-gray-100 focus:text-gray-300 focus:bg-gray-300"
@@ -261,7 +243,7 @@ const navbar = () => {
 				</div>
 			</div>
 
-			<div ref={profileRef} class="relative ml-8 z-30">
+			<div ref={profileRef} class="relative ml-8 z-30 select-none">
 				{
 					<img
 						src="https://images.unsplash.com/photo-1491604612772-6853927639ef?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGRvZ3N8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"

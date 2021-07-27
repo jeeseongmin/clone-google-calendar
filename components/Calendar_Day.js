@@ -16,9 +16,6 @@ const Calendar_Day = (props) => {
 		dispatch(updateFocusDate(date));
 	};
 
-	console.log("date", date);
-	console.log("focusDate", focusDate);
-
 	if (dayjs().format("YYYY-MM-DD") === date.format("YYYY-MM-DD")) {
 		return (
 			<th

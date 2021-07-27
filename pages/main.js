@@ -1,10 +1,13 @@
 import React from "react";
 import Layout from "../components/Layout";
+import ViewContainer from "../components/ViewContainer";
 
 const Main = () => {
 	return (
 		<>
-			<Layout></Layout>
+			<Layout>
+				<ViewContainer />
+			</Layout>
 		</>
 	);
 };

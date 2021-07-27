@@ -11,7 +11,7 @@ const Calendar = (props) => {
 	console.log(selectDate);
 
 	return (
-		<table class="w-full">
+		<table class="w-full ">
 			<thead>
 				<tr class="w-full text-xs font-light text-gray-500 flex flex-row justify-between">
 					<th class="flex-grow-1 w-6 h-6">일</th>

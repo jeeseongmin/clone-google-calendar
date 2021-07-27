@@ -1,19 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import plus from "../public/image/plus.png";
-import {
-	IoMdMailOpen,
-	IoMdSend,
-	IoMdDocument,
-	IoMdTrash,
-	IoIosArrowBack,
-	IoIosArrowForward,
-} from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Router from "next/router";
-import { MdSend } from "react-icons/md";
-import { AiFillStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { BsPeopleFill } from "react-icons/bs";
 import Calendar from "./Calendar";
 import SearchUserInput from "./input/searchUserInput";
 import { updateLeftbarDate } from "../reducers/settingSlice";
@@ -21,35 +11,17 @@ import dayjs from "dayjs";
 
 const Leftbar = () => {
 	// 나중에 redux에서 전역으로 관리해보기.
-	// const [selectDate, setSelectDate] = useState(dayjs());
-
 	const [hoverMenu, setHoverMenu] = useState(0);
 	const [isLongSide, setIsLongSide] = useState(true);
 	const isToggled = useSelector((state) => state.setting.isToggled);
 	const leftbarDate = useSelector((state) => state.setting.leftbarDate);
 
 	const dispatch = useDispatch();
-	// const menuType = useSelector((state) => state.modal.menuType);
-	// const isLongSide = useSelector((state) => state.modal.isLongSide);
-	// const onRefresh = () => {
-	// 	dispatch(resetCheckThread());
-	// };
-	// const onHoverMenu = (num) => {
-	// 	setHoverMenu(num);
-	// };
-
-	// const onMenuClick = (type) => {
-	// 	dispatch(setMenuType(type));
-	// 	Router.push("/main");
-	// 	onRefresh();
-	// };
 
 	const ManipulateMonth = (num) => {
 		if (num === 1) {
-			// setSelectDate(selectDate.add(1, "month"));
 			dispatch(updateLeftbarDate(leftbarDate.add(1, "month")));
 		} else {
-			// setSelectDate(selectDate.subtract(1, "month"));
 			dispatch(updateLeftbarDate(leftbarDate.subtract(1, "month")));
 		}
 	};
@@ -58,10 +30,10 @@ const Leftbar = () => {
 		<div
 			class={
 				" flex-grow-0 flex flex-col items-start flex-shrink-0 " +
-				(isToggled ? "w-64 mr-2 pr-4" : "w-19 relative mr-1")
+				(isToggled ? "w-64 mr-2 pr-4" : "hidden")
 			}
 		>
-			<div class="my-3 mb-4 ml-1">
+			<div class="my-3 mb-4 ml-1 invisible">
 				<div
 					// onClick={() => dispatch(setSendMail("open"))}
 					class={
@@ -76,14 +48,11 @@ const Leftbar = () => {
 						class="object-contain"
 						alt="Picture of the author"
 					/>
-					{isToggled && (
-						<button class="ml-2 text-sm font-medium">만들기</button>
-					)}
 				</div>
 			</div>
 			<div class={"w-full flex flex-col pb-4 " + (isToggled ? "" : "hidden")}>
-				<div class="w-full mx-4 px-2 mb-4 h-60 ">
-					<div class="w-full flex justify-between flex-row items-center">
+				<div class="w-full mx-4 px-2 mb-2 h-60 select-none">
+					<div class="ml-1 w-full mb-1 flex justify-between flex-row items-center">
 						<div class="text-sm font-semibold">
 							{leftbarDate.format("YYYY년 M월")}
 						</div>
@@ -105,8 +74,8 @@ const Leftbar = () => {
 					<Calendar date={leftbarDate} key={leftbarDate} />
 				</div>
 				<div class="px-3">
-					<div class="w-full mx-4 relative">
-						<div class="mb-2 text-sm text-gray-700">참석자 추가...</div>
+					<div class="w-full mx-4 relative select-none">
+						<div class="mb-2 text-sm text-gray-700 ">참석자 추가...</div>
 						<SearchUserInput bgColor={"gray"} />
 					</div>
 				</div>

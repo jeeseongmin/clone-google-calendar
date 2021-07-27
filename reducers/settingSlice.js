@@ -43,19 +43,16 @@ export const settingSlice = createSlice({
 			state.participant = action.payload;
 		},
 		updateFocusDate: (state, action) => {
-			console.log(action.payload);
 			state.focusDate = action.payload;
 		},
 		updateLeftbarDate: (state, action) => {
 			state.leftbarDate = action.payload;
 		},
 		resetSetting: (state) => {
-			console.log("initialState", initialState);
 			state = initialState;
 		},
 	},
 });
-console.log(initialState);
 // Action creators are generated for each case reducer function
 export const {
 	toggleSidebar,
