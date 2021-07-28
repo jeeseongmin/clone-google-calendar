@@ -14,7 +14,7 @@ import Dog2 from "../public/image/dog2.jpg";
 export default function login() {
 	// const dispatch = useDispatch();
 
-	const enterMain = async function () {
+	const enterMain = async function (text) {
 		// const login_payload = {
 		// 	uuid: "bRPleP6CYGMgNqWTEFzjdEpAQYZ2",
 		// 	email: "peration0422@gmail.com",
@@ -26,7 +26,7 @@ export default function login() {
 		// 	temp: [],
 		// };
 
-		Router.push("/main");
+		Router.push("/data/" + text);
 	};
 
 	return (
@@ -53,7 +53,7 @@ export default function login() {
 					<div class="w-full mb-8 relative flex justify-center flex-col">
 						<div
 							class="border px-4 py-3 mb-0 w-96 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={enterMain}
+							onClick={() => enterMain("Tom")}
 						>
 							<Image
 								src={Dog1}
@@ -66,7 +66,7 @@ export default function login() {
 						</div>
 						<div
 							class="border px-4 py-3 w-96 mb-0 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={enterMain}
+							onClick={() => enterMain("Steve")}
 						>
 							<Image
 								src={Dog2}
@@ -79,7 +79,7 @@ export default function login() {
 						</div>
 						<div
 							class="border px-4 py-3 w-96 mb-0 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={enterMain}
+							onClick={() => enterMain("Pery")}
 						>
 							<Image
 								src={Giraffe}
@@ -92,7 +92,7 @@ export default function login() {
 						</div>
 						<div
 							class="border px-4 py-3 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
-							onClick={enterMain}
+							onClick={() => enterMain("Bucky")}
 						>
 							<Image
 								src={Elephant}

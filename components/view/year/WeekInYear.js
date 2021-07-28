@@ -5,7 +5,6 @@ const WeekInYear = (props) => {
 	const [weekArr, setWeekArr] = useState([]);
 	const weekData = props.weekData;
 	const month = props.month;
-	console.log(weekData);
 
 	useEffect(() => {
 		const dayData = weekData;

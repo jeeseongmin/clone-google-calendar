@@ -10,7 +10,6 @@ const Calendar_Day = (props) => {
 	const date = obj.date;
 	const realMonth = obj.date.month();
 	const currentMonth = obj.currentMonth;
-	const today = dayjs().date();
 
 	const onFocusDate = () => {
 		dispatch(updateFocusDate(date));

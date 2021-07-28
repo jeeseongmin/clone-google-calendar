@@ -15,7 +15,8 @@ const Year = () => {
 			arr.push(monthData.add(i, "month"));
 		}
 		setYearArr(arr);
-	}, []);
+	}, [focusDate]);
+
 	return (
 		<div
 			class={
