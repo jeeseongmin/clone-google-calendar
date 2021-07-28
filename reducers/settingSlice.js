@@ -6,6 +6,7 @@ const name = "setting";
 //viewType : "Week", "Year", "Month", "Day"
 
 const initialState = {
+	currentUser: {},
 	isToggled: true,
 	profileModal: false,
 	viewModal: false,
@@ -21,6 +22,9 @@ export const settingSlice = createSlice({
 	name: name,
 	initialState,
 	reducers: {
+		setCurrentUser: (state, action) => {
+			state.currentUser = action.payload;
+		},
 		toggleSidebar: (state, action) => {
 			state.isToggled = action.payload;
 		},
@@ -55,6 +59,7 @@ export const settingSlice = createSlice({
 });
 // Action creators are generated for each case reducer function
 export const {
+	setCurrentUser,
 	toggleSidebar,
 	toggleProfile,
 	toggleViewModal,

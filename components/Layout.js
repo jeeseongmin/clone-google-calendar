@@ -5,9 +5,9 @@ import AddEvent from "../components/AddEvent";
 
 const Layout = (props) => {
 	return (
-		<div class="z-20 min-h-screen w-full flex flex-col relative overflow-hidden">
+		<div class="z-20 max-h-screen w-full flex flex-col relative">
 			<Navbar />
-			<div class="w-full h-full flex relative">
+			<div class="w-full h-auto flex relative">
 				<AddEvent />
 				<Leftbar />
 				{props.children}

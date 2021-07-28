@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import WeekInYear from "./WeekInYear";
 
 const CalendarInYear = (props) => {
-	const [monthArr, setMonthArr] = useState([]);
+	const [weekArr, setWeekArr] = useState([]);
 	const monthData = props.monthData;
-	const focusDate = useSelector((state) => state.setting.focusDate);
-	const year = focusDate.year();
 
 	// 달의 첫날이 있는 주의 첫째 날 data를 기준으로 배열로 만든다.
 	useEffect(() => {
@@ -15,7 +13,7 @@ const CalendarInYear = (props) => {
 		for (var i = 0; i < 6; i++) {
 			arr.push(weekData.add(i * 7, "day"));
 		}
-		setMonthArr(arr);
+		setWeekArr(arr);
 	}, []);
 
 	return (
@@ -32,7 +30,7 @@ const CalendarInYear = (props) => {
 				<div class="w-6 flex justify-center items-center">금</div>
 				<div class="w-6 flex justify-center items-center">토</div>
 			</div>
-			{monthArr.map((element, index) => {
+			{weekArr.map((element, index) => {
 				return (
 					<WeekInYear
 						key={element}

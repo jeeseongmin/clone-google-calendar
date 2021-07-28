@@ -22,9 +22,15 @@ const DayInYear = (props) => {
 				{dayData.date()}
 			</div>
 		);
-	} else {
+	} else if (month === dayData.month()) {
 		return (
 			<div class="w-6 h-6 cursor-pointer flex justify-center rounded-full items-center hover:bg-gray-100">
+				{dayData.date()}
+			</div>
+		);
+	} else {
+		return (
+			<div class="w-6 h-6 cursor-pointer flex justify-center rounded-full items-center hover:bg-gray-100 text-gray-400">
 				{dayData.date()}
 			</div>
 		);

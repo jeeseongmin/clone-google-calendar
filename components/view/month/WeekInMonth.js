@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import DayInYear from "./DayInYear";
+import DayInMonth from "./DayInMonth";
 
-const WeekInYear = (props) => {
+const WeekInMonth = (props) => {
 	const [dayArr, setDayArr] = useState([]);
+
 	const weekData = props.weekData;
 	const month = props.month;
 
@@ -16,12 +17,15 @@ const WeekInYear = (props) => {
 	}, []);
 
 	return (
-		<div class="pt-2 px-1 grid grid-flow-row grid-cols-7 grid-rows-1 gap-1">
+		<div class="grid grid-flow-row grid-cols-7 grid-rows-1 relative">
 			{dayArr.map((element, index) => {
-				return <DayInYear key={element} dayData={element} month={month} />;
+				return <DayInMonth key={element} dayData={element} month={month} />;
 			})}
+			<div class="w-full h-full pb-8 absolute top-8">
+				
+			</div>
 		</div>
 	);
 };
 
-export default WeekInYear;
+export default WeekInMonth;

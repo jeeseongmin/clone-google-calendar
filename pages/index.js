@@ -25,7 +25,6 @@ export default function login() {
 		// 	myThread: {},
 		// 	temp: [],
 		// };
-
 		Router.push("/data/" + text);
 	};
 
