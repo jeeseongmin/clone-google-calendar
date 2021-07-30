@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-const searchUserInput = (props) => {
+const descriptionInput = (props) => {
 	const text = props.placeholder;
-	const name = props.name;
 	const value = props.value;
+	const name = props.name;
 	const changeFunction = props.changeFunction;
 
 	const [active, setActive] = useState(false);
@@ -12,8 +12,9 @@ const searchUserInput = (props) => {
 			<input
 				type="text"
 				placeholder={text}
-				className={"customInput "}
+				className="customInput descriptionText"
 				value={value}
+				onChange={(e) => changeFunction(e, name)}
 				onFocus={(e) => setActive(true)}
 				onBlur={(e) => setActive(false)}
 			/>
@@ -28,4 +29,4 @@ const searchUserInput = (props) => {
 	);
 };
 
-export default searchUserInput;
+export default descriptionInput;

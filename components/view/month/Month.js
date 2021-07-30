@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import WeekInMonth from "./WeekInMonth";
+import AddCalendarModal from "../../AddCalendarModal";
+import {
+	toggleCalendarModal,
+	setTempColor,
+} from "../../../reducers/settingSlice";
 
 const Month = () => {
+	const dispatch = useDispatch();
 	const [weekArr, setWeekArr] = useState([]);
 	const focusDate = useSelector((state) => state.setting.focusDate);
 	const isToggled = useSelector((state) => state.setting.isToggled);
+	const calendarModal = useSelector((state) => state.setting.calendarModal);
+
+	const event = useSelector((state) => state.event);
 	const monthData = focusDate.startOf("Month");
 	const month = focusDate.month() + 1;
 	console.log(month, monthData);
+	const addModalRef = useRef(null);
 
 	useEffect(() => {
+		console.log("event", event);
 		const weekData = monthData.day(0);
 		const arr = [];
 		for (var i = 0; i < 5; i++) {
@@ -18,6 +29,31 @@ const Month = () => {
 		}
 		setWeekArr(arr);
 	}, [focusDate]);
+
+	useEffect(() => {
+		if (!calendarModal.isClicked) return;
+		dispatch(setTempColor("default"));
+	}, [calendarModal.isClicked]);
+
+	useEffect(() => {
+		if (!calendarModal.isClicked) return;
+		function handleClick(e) {
+			if (addModalRef.current === null) {
+				return;
+			} else if (!addModalRef.current.contains(e.target)) {
+				dispatch(
+					toggleCalendarModal({
+						isClicked: false,
+						week: null,
+						date: null,
+					})
+				);
+			}
+		}
+		window.addEventListener("click", handleClick);
+
+		return () => window.removeEventListener("click", handleClick);
+	}, [calendarModal.isClicked]);
 
 	return (
 		<div class={"w-full h-screen flex flex-col justify-start "}>
@@ -50,7 +86,7 @@ const Month = () => {
 			</div>
 			<div
 				class={
-					"w-full select-none h-full grid grid-flow-row grid-cols-1 grid-row-5"
+					"w-full select-none h-full grid grid-flow-row grid-cols-1 grid-row-5 relative"
 				}
 			>
 				{weekArr.map((element, index) => {
@@ -59,11 +95,15 @@ const Month = () => {
 							key={element}
 							weekData={element}
 							month={monthData.month()}
+							week={index}
 						/>
 					);
 				})}
 			</div>
-			<div class="w-full h-16"></div>
+			<div class="w-full h-20"></div>
+			<div class="" ref={addModalRef}>
+				{calendarModal.isClicked && <AddCalendarModal />}
+			</div>
 		</div>
 	);
 };

@@ -1,21 +1,40 @@
 import React from "react";
 import dayjs from "dayjs";
-import { updateFocusDate } from "../reducers/settingSlice";
+import {
+	updateFocusDate,
+	toggleCalendarModal,
+	updateStartDate,
+	updateEndDate,
+} from "../reducers/settingSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Calendar_Day = (props) => {
 	const dispatch = useDispatch();
 	const focusDate = useSelector((state) => state.setting.focusDate);
+	const calendarModal = useSelector((state) => state.setting.calendarModal);
 	const obj = props.obj;
 	const date = obj.date;
+	const type = props.type;
 	const realMonth = obj.date.month();
 	const currentMonth = obj.currentMonth;
 
 	const onFocusDate = () => {
-		dispatch(updateFocusDate(date));
+		console.log(type);
+		if (type === "modalStartDate") {
+			dispatch(updateStartDate(obj.date.startOf("day")));
+			dispatch(updateFocusDate(date));
+		} else if (type === "modalEndDate") {
+			dispatch(updateEndDate(obj.date.endOf("day")));
+			dispatch(updateFocusDate(date));
+		} else {
+			dispatch(updateFocusDate(date));
+		}
 	};
 
-	if (dayjs().format("YYYY-MM-DD") === date.format("YYYY-MM-DD")) {
+	if (
+		type === "leftbar" &&
+		dayjs().format("YYYY-MM-DD") === date.format("YYYY-MM-DD")
+	) {
 		return (
 			<th
 				onClick={onFocusDate}

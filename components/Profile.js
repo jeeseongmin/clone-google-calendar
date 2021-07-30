@@ -42,7 +42,7 @@ const Profile = () => {
 	};
 
 	return (
-		<div ref={profileRef} class=" ml-8 mr-2 z-30 select-none relative">
+		<div ref={profileRef} class="z-30 ml-8 mr-2 select-none relative">
 			{
 				<div class="w-10 flex items-center">
 					<Image
@@ -80,7 +80,7 @@ const Profile = () => {
 						<FiUserPlus size={20} color={"#5f6368"} class="mr-4" />
 						<p class="font-medium">다른 계정 추가</p>
 					</div>
-					<div class="w-full py-4 flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
+					<div class="z-50 w-full py-4 flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
 						<button
 							class="border border-gray-300 rounded-lg px-6 py-2 cursor-pointer"
 							onClick={logOut}

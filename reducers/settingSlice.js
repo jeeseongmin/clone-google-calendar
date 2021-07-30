@@ -9,6 +9,13 @@ const initialState = {
 	currentUser: {},
 	isToggled: true,
 	profileModal: false,
+	calendarModal: {
+		isClicked: false,
+		week: null,
+		date: null,
+		start: dayjs(),
+		end: dayjs(),
+	},
 	viewModal: false,
 	viewType: "Year",
 	fontColor: "black",
@@ -16,6 +23,9 @@ const initialState = {
 	participant: [],
 	focusDate: dayjs(),
 	leftbarDate: dayjs(),
+	tempColor: "default",
+	startDate: dayjs(),
+	endDate: dayjs(),
 };
 
 export const settingSlice = createSlice({
@@ -28,10 +38,22 @@ export const settingSlice = createSlice({
 		toggleSidebar: (state, action) => {
 			state.isToggled = action.payload;
 		},
+		updateStartDate: (state, action) => {
+			state.startDate = action.payload;
+		},
+		updateEndDate: (state, action) => {
+			state.endDate = action.payload;
+		},
 		toggleProfile: (state, action) => {
 			state.profileModal = action.payload;
 		},
+		toggleCalendarModal: (state, action) => {
+			state.calendarModal.isClicked = action.payload.isClicked;
+			state.calendarModal.week = action.payload.week;
+			state.calendarModal.date = action.payload.date;
+		},
 		toggleViewModal: (state, action) => {
+			console.log(action.payload);
 			state.viewModal = action.payload;
 		},
 		changeView: (state, action) => {
@@ -52,6 +74,9 @@ export const settingSlice = createSlice({
 		updateLeftbarDate: (state, action) => {
 			state.leftbarDate = action.payload;
 		},
+		setTempColor: (state, action) => {
+			state.tempColor = action.payload;
+		},
 		resetSetting: (state) => {
 			state = initialState;
 		},
@@ -62,6 +87,7 @@ export const {
 	setCurrentUser,
 	toggleSidebar,
 	toggleProfile,
+	toggleCalendarModal,
 	toggleViewModal,
 	changeView,
 	updateFontColor,
@@ -70,6 +96,9 @@ export const {
 	updateFocusDate,
 	updateLeftbarDate,
 	resetSetting,
+	setTempColor,
+	updateStartDate,
+	updateEndDate,
 } = settingSlice.actions;
 
 export default settingSlice.reducer;

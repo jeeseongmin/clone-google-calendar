@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import Image from "next/image";
 import plus from "../public/image/plus.png";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Calendar from "./Calendar";
 import SearchUserInput from "./input/searchUserInput";
-import { updateLeftbarDate } from "../reducers/settingSlice";
+import {
+	updateLeftbarDate,
+	toggleCalendarModal,
+} from "../reducers/settingSlice";
 import dayjs from "dayjs";
 
 const Leftbar = () => {
 	// 나중에 redux에서 전역으로 관리해보기.
-	const [hoverMenu, setHoverMenu] = useState(0);
-	const [isLongSide, setIsLongSide] = useState(true);
 	const isToggled = useSelector((state) => state.setting.isToggled);
 	const leftbarDate = useSelector((state) => state.setting.leftbarDate);
 
@@ -35,7 +35,6 @@ const Leftbar = () => {
 		>
 			<div class="my-3 mb-4 ml-1 invisible">
 				<div
-					// onClick={() => dispatch(setSendMail("open"))}
 					class={
 						"w-auto flex flex-row ml-1 pl-2 py-2 justify-center items-center cursor-pointer shadow-lg rounded-full border border-gray-300 hover:shadow-2xl " +
 						(isToggled ? "pr-4" : "pr-2")
@@ -71,12 +70,12 @@ const Leftbar = () => {
 							/>
 						</div>
 					</div>
-					<Calendar date={leftbarDate} key={leftbarDate} />
+					<Calendar date={leftbarDate} key={leftbarDate} type={"leftbar"} />
 				</div>
 				<div class="px-3">
 					<div class="w-full mx-4 relative select-none">
 						<div class="mb-2 text-sm text-gray-700 ">참석자 추가...</div>
-						<SearchUserInput bgColor={"gray"} />
+						<SearchUserInput bgColor={"gray"} placeholder={"사용자 검색"} />
 					</div>
 				</div>
 			</div>

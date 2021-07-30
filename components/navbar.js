@@ -58,7 +58,7 @@ const navbar = () => {
 	};
 
 	return (
-		<div class="h-30 flex flex-row justify-start items-center shadow-mg border-b border-gray-300 ">
+		<div class="z-100 h-30 flex flex-row justify-start items-center shadow-mg border-b border-gray-300 ">
 			<div class="w-64 mr-2 pr-4 pl-4 flex flex-row items-center flex-shrink-0">
 				<FiMenu
 					size={36}

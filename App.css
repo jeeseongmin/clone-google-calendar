@@ -10,7 +10,7 @@
 	font-size: 16px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	padding-left: 16px;
+	padding-left: 8px;
 	padding-right: 16px;
 	border-bottom-width: 0px;
 	border-left-width: 0px;
@@ -80,4 +80,12 @@
 	}
 	100% {
 	}
+}
+
+.titleText {
+	font-size: 1.25rem;
+}
+
+.descriptionText {
+	font-size: 1rem;
 }
