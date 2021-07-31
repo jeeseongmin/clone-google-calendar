@@ -31,6 +31,10 @@ const navbar = () => {
 	};
 
 	useEffect(() => {
+		console.log("navbar");
+	}, [])
+
+	useEffect(() => {
 		if (viewType === "Year") {
 			setDateText(focusDate.format("YYYY년"));
 		} else if (viewType === "Month") {

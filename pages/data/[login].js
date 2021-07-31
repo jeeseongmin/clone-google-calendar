@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { setUser } from "../../reducers/userSlice";
 import { setCurrentUser } from "../../reducers/settingSlice";
@@ -11,17 +12,17 @@ import Elephant from "../../public/image/elephant.jpg";
 import Giraffe from "../../public/image/giraffe.jpg";
 import Dog1 from "../../public/image/dog1.jpeg";
 import Dog2 from "../../public/image/dog2.jpg";
+import Default from "../../public/image/default-img.png";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { route } from "next/dist/next-server/server/router";
 
 const init = () => {
 	dayjs.locale("ko"); // global로 한국어 locale 사용
 
 	const router = useRouter();
 	const { login } = router.query;
-
+	const currentUser = useSelector((state) => state.setting.currentUser);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		try {
@@ -155,6 +156,9 @@ const init = () => {
 			dispatch(setUser(user));
 			dispatch(setCurrentUser(currentUser));
 			dispatch(setEvent(event));
+			console.log(user);
+			console.log(currentUser);
+			console.log(event);
 			Router.push("/main");
 		} catch (error) {
 			console.log(error);

@@ -6,15 +6,28 @@ import { FiUserPlus } from "react-icons/fi";
 import Image from "next/image";
 import { toggleProfile } from "../reducers/settingSlice";
 import { HiOutlineCamera } from "react-icons/hi";
+import Default from "../public/image/default-img.png";
+import Elephant from "../public/image/elephant.jpg";
+import Giraffe from "../public/image/giraffe.jpg";
+import Dog1 from "../public/image/dog1.jpeg";
+import Dog2 from "../public/image/dog2.jpg";
 
 const Profile = () => {
+	const [profileImg, setProfileImg] = useState(Default);
 	const dispatch = useDispatch();
 	const profileRef = useRef(null);
 	// profile modal toggle
 	const profileModal = useSelector((state) => state.setting.profileModal);
 
 	const currentUser = useSelector((state) => state.setting.currentUser);
+	useEffect(() => {
+		console.log("profile");
 
+		if (currentUser.name === "Tom") setProfileImg(Dog1);
+		else if(currentUser.name === "Steve") setProfileImg(Dog2);
+		else if(currentUser.name === "Pery") setProfileImg(Giraffe);
+		else if(currentUser.name === "Bucky") setProfileImg(Elephant);
+	}, []);
 	// ref 이외의 다른 부분을 클릭했을 때에 일어나야 하는 일
 	useEffect(() => {
 		if (!profileModal) return;
@@ -46,7 +59,7 @@ const Profile = () => {
 			{
 				<div class="w-10 flex items-center">
 					<Image
-						src={currentUser.profileUrl}
+						src={profileImg || Default}
 						width={55}
 						height={55}
 						class="z-30 cursor-pointer mr-8 flex-1 rounded-full object-cover focus:shadow-mg "
@@ -60,7 +73,7 @@ const Profile = () => {
 					<div class="w-full flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
 						<div class="relative mb-4">
 							<Image
-								src={currentUser.profileUrl}
+								src={profileImg || Default}
 								width={80}
 								height={80}
 								class="object-cover cursor-pointer rounded-full"
