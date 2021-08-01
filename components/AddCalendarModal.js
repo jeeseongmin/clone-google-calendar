@@ -63,7 +63,6 @@ const AddCalendarModal = (props) => {
 
 	useEffect(() => {
 		// console.log("mycalendar List", Object.keys(currentUser.myCalender));
-		console.log("mycalendar list", Object.keys(currentUser.myCalendar));
 		setCalendarList(Object.keys(currentUser.myCalendar));
 	}, []);
 
@@ -259,7 +258,7 @@ const AddCalendarModal = (props) => {
 					posY
 				}
 			>
-				<div class=" w-96 h-10 flex justify-between bg-gray-100 items-center">
+				<div class=" w-full h-10 flex justify-between bg-gray-100 items-center">
 					<div class="mx-4 my-4 cursor-pointer">
 						<ImEnlarge size={16} color="gray" />
 					</div>
@@ -267,7 +266,7 @@ const AddCalendarModal = (props) => {
 						<IoMdClose size={24} color="gray" />
 					</div>
 				</div>
-				<div class="w-96 h-full flex flex-col bg-white ">
+				<div class="w-auto h-full flex flex-col bg-white ">
 					<div class="z-40 w-full flex flex-row">
 						<div class="w-16"></div>
 						<div class="mr-6 flex-1 relative text-xl">
@@ -281,94 +280,111 @@ const AddCalendarModal = (props) => {
 							<div></div>
 						</div>
 					</div>
-					<div class="z-40 w-full flex flex-row items-center">
+					<div class="z-40 my-2 w-auto flex flex-row items-center">
 						<div class="w-16"></div>
-						<div class="flex-1 flex flex-col  ">
+						<div class="flex-1 flex flex-col">
 							<div class="flex flex-row items-center mr-6 mb-2">
-								<div ref={startRef} class="w-1/2 relative ">
-									<div onClick={onStartModaltoggle} class="cursor-pointer">
-										<SearchUserInput
-											value={
-												startDate.format("M월 DD일") +
+								<div
+									ref={startRef}
+									class="w-auto relative flex flex-row items-center text-xs"
+								>
+									<div class="px-2 py-2 cursor-pointer hover:bg-gray-100 relative">
+										<div onClick={onStartModaltoggle}>
+											{startDate.format("M월 DD일") +
 												"(" +
 												dayText[startDate.day()] +
-												")"
-											}
-										/>
-									</div>
-									{startdateModal && (
-										<div class="z-40 px-4 pb-2 absolute border border-gray-200 w-auto h-auto shadow-2xl bg-white">
-											<div class="ml-1 w-full mb-1 flex justify-between flex-row items-center">
-												<div class="text-sm font-semibold select-none">
-													{modalDate.format("YYYY년 M월")}
+												")"}
+										</div>
+										{startdateModal && (
+											<div class="z-40 px-4 pb-2 absolute border border-gray-200 w-auto h-auto shadow-2xl bg-white">
+												<div class="ml-1 w-full mb-1 flex justify-between flex-row items-center">
+													<div class="text-sm font-semibold select-none">
+														{modalDate.format("YYYY년 M월")}
+													</div>
+													<div class="flex flex-row">
+														<IoIosArrowBack
+															size={35}
+															color={"#5f6368"}
+															onClick={() => ManipulateMonth(-1)}
+															class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+														/>
+														<IoIosArrowForward
+															size={35}
+															color={"#5f6368"}
+															onClick={() => ManipulateMonth(1)}
+															class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+														/>
+													</div>
 												</div>
-												<div class="flex flex-row">
-													<IoIosArrowBack
-														size={35}
-														color={"#5f6368"}
-														onClick={() => ManipulateMonth(-1)}
-														class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-													/>
-													<IoIosArrowForward
-														size={35}
-														color={"#5f6368"}
-														onClick={() => ManipulateMonth(1)}
-														class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-													/>
-												</div>
+												<Calendar
+													date={modalDate}
+													key={modalDate}
+													type={"modalStartDate"}
+												/>
 											</div>
-											<Calendar
-												date={modalDate}
-												key={modalDate}
-												type={"modalStartDate"}
-											/>
+										)}
+									</div>
+									{eventInfo.type === "allDay" && (
+										<div
+											// onClick={onStartModaltoggle}
+											class="px-2 py-2 cursor-pointer hover:bg-gray-100 mx-2"
+										>
+											<div>{startDate.format("HH:mm")}</div>
 										</div>
 									)}
 								</div>
-								<p>-</p>
-								<div ref={endRef} class="w-1/2 relative">
-									<div onClick={onEndModaltoggle} class="cursor-pointer">
-										<SearchUserInput
-											onClick={onEndModaltoggle}
-											value={
-												endDate.format("M월 DD일") +
+								<p class="mx-2">-</p>
+								<div
+									ref={endRef}
+									class="w-auto relative flex flex-row items-center text-xs"
+								>
+									{eventInfo.type === "allDay" && (
+										<div
+											// onClick={onEndModaltoggle}
+											class="w-auto px-2 py-2 cursor-pointer hover:bg-gray-100 mx-2"
+										>
+											<div>{endDate.format("HH:mm")}</div>
+										</div>
+									)}
+									<div class="px-2 py-2 cursor-pointer hover:bg-gray-100 relative">
+										<div onClick={onEndModaltoggle}>
+											{endDate.format("M월 DD일") +
 												"(" +
 												dayText[endDate.day()] +
-												")"
-											}
-										/>
-									</div>
-									{enddateModal && (
-										<div class="z-40 px-4 pb-2 absolute border border-gray-200 w-auto h-auto shadow-2xl bg-white">
-											<div class="ml-1 w-full mb-1 flex justify-between flex-row items-center">
-												<div class="text-sm font-semibold select-none">
-													{modalDate.format("YYYY년 M월")}
-												</div>
-												<div class="flex flex-row">
-													<IoIosArrowBack
-														size={35}
-														color={"#5f6368"}
-														onClick={() => ManipulateMonth(-1)}
-														class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-													/>
-													<IoIosArrowForward
-														size={35}
-														color={"#5f6368"}
-														onClick={() => ManipulateMonth(1)}
-														class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-													/>
-												</div>
-											</div>
-											<Calendar
-												date={modalDate}
-												key={modalDate}
-												type={"modalEndDate"}
-											/>
+												")"}
 										</div>
-									)}
+										{enddateModal && (
+											<div class="z-40 px-4 pb-2 right-0 absolute border border-gray-200 w-auto h-auto shadow-2xl bg-white">
+												<div class="ml-1 w-full mb-1 flex justify-between flex-row items-center">
+													<div class="text-sm font-semibold select-none">
+														{modalDate.format("YYYY년 M월")}
+													</div>
+													<div class="flex flex-row">
+														<IoIosArrowBack
+															size={35}
+															color={"#5f6368"}
+															onClick={() => ManipulateMonth(-1)}
+															class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+														/>
+														<IoIosArrowForward
+															size={35}
+															color={"#5f6368"}
+															onClick={() => ManipulateMonth(1)}
+															class="p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
+														/>
+													</div>
+												</div>
+												<Calendar
+													date={modalDate}
+													key={modalDate}
+													type={"modalEndDate"}
+												/>
+											</div>
+										)}
+									</div>
 								</div>
 							</div>
-							<div class="pl-2 text-gray-700 text-xs flex flex-row items-center justify-center select-none">
+							<div class="pl-2 text-gray-700 text-xs flex flex-row items-center select-none">
 								{eventInfo.type === "allDay" ? (
 									<div
 										onClick={onToggleAllDay}
@@ -379,7 +395,7 @@ const AddCalendarModal = (props) => {
 								) : (
 									<div
 										onClick={onToggleAllDay}
-										class="cursor-pointer w-5 h-5 mr-2 rounded-sm border border-blue-500 bg-white flex justify-center items-center"
+										class="cursor-pointer w-5 h-5 mr-2 rounded-sm border-2 border-blue-500 bg-white flex justify-center items-center"
 									>
 										<HiCheck size={24} color="white" />
 									</div>
@@ -439,7 +455,7 @@ const AddCalendarModal = (props) => {
 						>
 							<div
 								onClick={() => setCalendarNameModal(!calendarNameModal)}
-								class="px-2 py-1 cursor-pointer w-42 mr-6 flex-1 flex flex-row items-center relative text-sm hover:bg-gray-100"
+								class="px-2 py-1 cursor-pointer w-46 mr-6 flex-1 flex flex-row items-center relative text-sm hover:bg-gray-100"
 							>
 								<p class="pr-1 w-42 text-sm text-gray-800 font-medium">
 									{currentUser.myCalendar[eventInfo.host.myCalendar].name}

@@ -20,7 +20,7 @@ const Month = () => {
 	console.log(month, monthData);
 	const addModalRef = useRef(null);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		console.log("event", event);
 		const weekData = monthData.day(0);
 		const arr = [];
