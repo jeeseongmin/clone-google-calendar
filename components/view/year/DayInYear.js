@@ -12,7 +12,10 @@ const DayInYear = (props) => {
 		dispatch(updateFocusDate());
 	};
 
-	if (dayjs().format("YYYY-MM-DD") === dayData.format("YYYY-MM-DD")) {
+	if (
+		month === focusDate.month() &&
+		dayjs().format("YYYY-MM-DD") === dayData.format("YYYY-MM-DD")
+	) {
 		return (
 			<div class="w-6 h-6 cursor-pointer flex justify-center rounded-full items-center bg-blue-600 text-white">
 				{dayData.date()}

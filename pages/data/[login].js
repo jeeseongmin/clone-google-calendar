@@ -34,6 +34,11 @@ const init = () => {
 				color: "red",
 				isChecked: true,
 			};
+			Tom_calendar[uuidv4()] = {
+				name: "Study",
+				color: "yellow",
+				isChecked: true,
+			};
 
 			const Pery_calendar = {};
 			Pery_calendar[uuidv4()] = {
@@ -41,11 +46,21 @@ const init = () => {
 				color: "yellow",
 				isChecked: true,
 			};
+			Pery_calendar[uuidv4()] = {
+				name: "Party",
+				color: "purple",
+				isChecked: true,
+			};
 
 			const Steve_calendar = {};
 			Steve_calendar[uuidv4()] = {
 				name: "Steve",
 				color: "green",
+				isChecked: true,
+			};
+			Steve_calendar[uuidv4()] = {
+				name: "Special",
+				color: "pink",
 				isChecked: true,
 			};
 

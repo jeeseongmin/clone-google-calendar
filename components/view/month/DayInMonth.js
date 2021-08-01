@@ -40,6 +40,7 @@ const DayInMonth = (props) => {
 			dispatch(updateStartDate(dayData));
 			dispatch(updateEndDate(dayData));
 			setAddModal(!addModal);
+			// dispatch(updateFocusDate(dayData));
 		} else if (addModal) {
 			const payload = {
 				isClicked: false,

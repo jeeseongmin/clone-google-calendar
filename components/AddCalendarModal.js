@@ -20,29 +20,38 @@ import { GiPositionMarker } from "react-icons/gi";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { BiCheck } from "react-icons/bi";
 import { setTempColor, toggleCalendarModal } from "../reducers/settingSlice";
+import Default from "../public/image/default-img.png";
+import Elephant from "../public/image/elephant.jpg";
+import Giraffe from "../public/image/giraffe.jpg";
+import Dog1 from "../public/image/dog1.jpeg";
+import Dog2 from "../public/image/dog2.jpg";
+import { HiCheck } from "react-icons/hi";
 
 const AddCalendarModal = (props) => {
 	const dispatch = useDispatch();
-	// const dayData = props.dayData;
-	// const week = props.week;
-	// const month = props.month;
+
+	const [calendarList, setCalendarList] = useState([]);
 
 	const [colorModal, setColorModal] = useState(false);
+	const [calendarNameModal, setCalendarNameModal] = useState(false);
 	const [modalDate, setModalDate] = useState(dayjs());
 	const [startdateModal, setStartdateModal] = useState(false);
 	const [enddateModal, setEnddateModal] = useState(false);
+	// const [isAllDay, setIsAllDay] = useState(false);
 	const colorRef = useRef(null);
+	const calendarNameRef = useRef(null);
 	const startRef = useRef(null);
 	const endRef = useRef(null);
 	const titleRef = useRef(null);
+	const otherRef = useRef(null);
 	const dayText = ["일", "월", "화", "수", "목", "금", "토"];
+	const user = useSelector((state) => state.user.user);
 	const focusDate = useSelector((state) => state.setting.focusDate);
 	const currentUser = useSelector((state) => state.setting.currentUser);
 	const calendarModal = useSelector((state) => state.setting.calendarModal);
 	const startDate = useSelector((state) => state.setting.startDate);
 	const endDate = useSelector((state) => state.setting.endDate);
 	const { isClicked, week, date } = calendarModal;
-	console.log(calendarModal);
 	let myColor = "bg-red-400 ";
 	myColor = getColor(
 		currentUser.myCalendar[Object.keys(currentUser.myCalendar)[0]].color
@@ -52,17 +61,33 @@ const AddCalendarModal = (props) => {
 		titleRef.current.focus();
 	}, []);
 
+	useEffect(() => {
+		// console.log("mycalendar List", Object.keys(currentUser.myCalender));
+		console.log("mycalendar list", Object.keys(currentUser.myCalendar));
+		setCalendarList(Object.keys(currentUser.myCalendar));
+	}, []);
+
 	// useEffect(() => {
 	// 	if (!startdateModal || !enddateModal) return;
 	// }, [startdateModal, enddateModal]);
 
 	const onStartModaltoggle = () => {
-		console.log("start Click!!!!!!!!!!!");
 		if (startdateModal) {
 			setStartdateModal(false);
 		} else {
 			setStartdateModal(true);
 		}
+	};
+
+	const onToggleAllDay = () => {
+		console.log("onToggleAllDay");
+		const cp = { ...eventInfo };
+		if (cp.type === "allDay") {
+			cp.type = "default";
+		} else {
+			cp.type = "allDay";
+		}
+		setEventInfo(cp);
 	};
 
 	const onEndModaltoggle = () => {
@@ -83,6 +108,7 @@ const AddCalendarModal = (props) => {
 
 	const [eventInfo, setEventInfo] = useState({
 		title: "",
+		type: "allDay",
 		description: "",
 		participants: {},
 		period: {
@@ -94,6 +120,7 @@ const AddCalendarModal = (props) => {
 			myCalendar: Object.keys(currentUser.myCalendar)[0],
 		},
 		color: currentUser.myCalendar[Object.keys(currentUser.myCalendar)[0]].color,
+		participants: [currentUser.uuid],
 		repeat: {
 			type: "none",
 			day: [],
@@ -102,10 +129,6 @@ const AddCalendarModal = (props) => {
 			deleted: {},
 		},
 	});
-
-	useEffect(() => {
-		if (colorModal) return;
-	}, [colorModal]);
 
 	useEffect(() => {
 		if (!colorModal) return;
@@ -120,6 +143,20 @@ const AddCalendarModal = (props) => {
 
 		return () => window.removeEventListener("click", handleClick);
 	}, [colorModal]);
+
+	useEffect(() => {
+		if (!calendarNameModal) return;
+		function handleClick(e) {
+			if (calendarNameRef.current === null) {
+				return;
+			} else if (!calendarNameRef.current.contains(e.target)) {
+				setCalendarNameModal(false);
+			}
+		}
+		window.addEventListener("click", handleClick);
+
+		return () => window.removeEventListener("click", handleClick);
+	}, [calendarNameModal]);
 
 	useEffect(() => {
 		if (!startdateModal) return;
@@ -164,6 +201,13 @@ const AddCalendarModal = (props) => {
 		const cp = { ...eventInfo };
 		cp.color = text;
 		setEventInfo(cp);
+	};
+
+	const chooseName = (uid) => {
+		const cp = { ...eventInfo };
+		cp.host.myCalendar = uid;
+		setEventInfo(cp);
+		console.log(eventInfo);
 	};
 
 	const onCloseModal = () => {
@@ -234,12 +278,13 @@ const AddCalendarModal = (props) => {
 								changeFunction={onChangeEvent}
 								titleRef={titleRef}
 							/>
+							<div></div>
 						</div>
 					</div>
 					<div class="z-40 w-full flex flex-row items-center">
 						<div class="w-16"></div>
 						<div class="flex-1 flex flex-col  ">
-							<div class="flex flex-row items-center ">
+							<div class="flex flex-row items-center mr-6 mb-2">
 								<div ref={startRef} class="w-1/2 relative ">
 									<div onClick={onStartModaltoggle} class="cursor-pointer">
 										<SearchUserInput
@@ -323,11 +368,29 @@ const AddCalendarModal = (props) => {
 									)}
 								</div>
 							</div>
-							<div class="py-1 pl-4 text-gray-700 text-xs">반복 안함</div>
+							<div class="pl-2 text-gray-700 text-xs flex flex-row items-center justify-center select-none">
+								{eventInfo.type === "allDay" ? (
+									<div
+										onClick={onToggleAllDay}
+										class="cursor-pointer w-5 h-5 mr-2 rounded-sm bg-blue-500 flex justify-center items-center"
+									>
+										<HiCheck size={24} color="white" />
+									</div>
+								) : (
+									<div
+										onClick={onToggleAllDay}
+										class="cursor-pointer w-5 h-5 mr-2 rounded-sm border border-blue-500 bg-white flex justify-center items-center"
+									>
+										<HiCheck size={24} color="white" />
+									</div>
+								)}
+
+								<span>종일</span>
+							</div>
 						</div>
-						<button class="mr-6 px-2 py-1 text-xs rounded-md border border-gray-400">
+						{/* <button class="mr-6 px-2 py-1 text-xs rounded-md border border-gray-400">
 							시간 추가
-						</button>
+						</button> */}
 					</div>
 					<div class="z-30 w-full flex flex-row">
 						<div class="w-16  flex justify-center items-center">
@@ -370,11 +433,34 @@ const AddCalendarModal = (props) => {
 						<div class="w-16 py-2 flex justify-center items-center">
 							<IoMdCalendar size={24} />
 						</div>
-						<div class="pl-1 flex flex-row items-center justify-start">
-							<div class="px-2 py-1 cursor-pointer w-24 mr-6 flex-1 flex flex-row items-center relative text-sm hover:bg-gray-100">
-								<p class="pr-1 text-sm text-gray-800 font-medium">지성민</p>
+						<div
+							ref={calendarNameRef}
+							class="pl-1 flex flex-row items-center justify-start relative"
+						>
+							<div
+								onClick={() => setCalendarNameModal(!calendarNameModal)}
+								class="px-2 py-1 cursor-pointer w-42 mr-6 flex-1 flex flex-row items-center relative text-sm hover:bg-gray-100"
+							>
+								<p class="pr-1 w-42 text-sm text-gray-800 font-medium">
+									{currentUser.myCalendar[eventInfo.host.myCalendar].name}
+								</p>
 								<RiArrowDropDownFill size={28} color={"#5f6368"} />
 							</div>
+							{calendarNameModal && (
+								<div class="z-40 py-2 w-46 h-auto border border-gray-200 shadow-2xl absolute  top-0 bg-white justify-center items-center">
+									{/* currentUser.myCalendar[Object.keys(currentUser.myCalendar)[0]] */}
+									{calendarList.map((element, index) => {
+										return (
+											<p
+												onClick={() => chooseName(element)}
+												class="px-3 py-2 cursor-pointer text-sm text-gray-800 font-medium hover:bg-gray-100"
+											>
+												{currentUser.myCalendar[element].name}
+											</p>
+										);
+									})}
+								</div>
+							)}
 						</div>
 						<div
 							ref={colorRef}
@@ -382,7 +468,7 @@ const AddCalendarModal = (props) => {
 						>
 							<div
 								onClick={() => setColorModal(!colorModal)}
-								class="px-2 py-1 cursor-pointer w-16 mr-6 flex-1 flex flex-row items-center relative text-sm hover:bg-gray-100"
+								class="px-2 py-1 cursor-pointer w-16 mr-6 flex-1 flex flex-row items-center relative text-sm	 hover:bg-gray-100"
 							>
 								<div
 									class={
@@ -443,6 +529,7 @@ const AddCalendarModal = (props) => {
 								</div>
 							)}
 						</div>
+						<div ref={otherRef}></div>
 					</div>
 				</div>
 			</div>

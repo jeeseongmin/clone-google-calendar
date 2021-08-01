@@ -9,7 +9,6 @@ import Calendar_Week from "./Calendar_Week";
 const Calendar = (props) => {
 	const selectDate = props.date;
 	const type = props.type;
-	console.log(selectDate);
 
 	return (
 		<table class="w-full select-none">
@@ -26,7 +25,14 @@ const Calendar = (props) => {
 			</thead>
 			<tbody class="">
 				{[0, 1, 2, 3, 4, 5].map((element, index) => {
-					return <Calendar_Week week={element} date={selectDate} type={type} />;
+					return (
+						<Calendar_Week
+							key={element}
+							week={element}
+							date={selectDate}
+							type={type}
+						/>
+					);
 				})}
 			</tbody>
 		</table>

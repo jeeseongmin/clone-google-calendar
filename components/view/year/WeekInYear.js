@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useLayoutEffect } from "react";
 import DayInYear from "./DayInYear";
 
 const WeekInYear = (props) => {
@@ -6,7 +6,7 @@ const WeekInYear = (props) => {
 	const weekData = props.weekData;
 	const month = props.month;
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const dayData = weekData;
 		const arr = [];
 		for (var i = 0; i < 7; i++) {

@@ -22,6 +22,7 @@ const Calendar_Day = (props) => {
 		console.log(type);
 		if (type === "modalStartDate") {
 			dispatch(updateStartDate(obj.date.startOf("day")));
+			dispatch(updateEndDate(obj.date.startOf("day").add(30, "minute")));
 			dispatch(updateFocusDate(date));
 		} else if (type === "modalEndDate") {
 			dispatch(updateEndDate(obj.date.endOf("day")));
@@ -74,3 +75,10 @@ const Calendar_Day = (props) => {
 };
 
 export default Calendar_Day;
+
+// const areEqual = (prevProps, nextProps) => {
+// 	console.log(prevProps);
+// 	return prevProps.obj === nextProps.obj;
+// };
+
+// export default React.memo(Calendar_Day, areEqual);

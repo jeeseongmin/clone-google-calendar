@@ -21,12 +21,10 @@ const Profile = () => {
 
 	const currentUser = useSelector((state) => state.setting.currentUser);
 	useEffect(() => {
-		console.log("profile");
-
 		if (currentUser.name === "Tom") setProfileImg(Dog1);
-		else if(currentUser.name === "Steve") setProfileImg(Dog2);
-		else if(currentUser.name === "Pery") setProfileImg(Giraffe);
-		else if(currentUser.name === "Bucky") setProfileImg(Elephant);
+		else if (currentUser.name === "Steve") setProfileImg(Dog2);
+		else if (currentUser.name === "Pery") setProfileImg(Giraffe);
+		else if (currentUser.name === "Bucky") setProfileImg(Elephant);
 	}, []);
 	// ref 이외의 다른 부분을 클릭했을 때에 일어나야 하는 일
 	useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import Calendar_Day from "./Calendar_Day";
@@ -10,7 +10,7 @@ const Calendar_Week = (props) => {
 	const type = props.type;
 
 	// 주차별
-	useEffect(() => {
+	useLayoutEffect(() => {
 		let weekArr = [];
 
 		const firstDayInWeek = _date.startOf("month").add(7 * _week, "day");
@@ -29,10 +29,17 @@ const Calendar_Week = (props) => {
 	return (
 		<tr class=" w-56 text-xs font-light text-gray-500 flex flex-row justify-between">
 			{week.map((element, index) => {
-				return <Calendar_Day obj={element} key={element.day} type={type}/>;
+				return <Calendar_Day obj={element} key={element.date} type={type} />;
 			})}
 		</tr>
 	);
 };
 
 export default Calendar_Week;
+
+// const areEqual = (prevProps, nextProps) => {
+// 	console.log(prevProps);
+// 	return prevProps.date === nextProps.date;
+// };
+
+// export default React.memo(Calendar_Week, areEqual);

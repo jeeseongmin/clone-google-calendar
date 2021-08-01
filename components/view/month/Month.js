@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import WeekInMonth from "./WeekInMonth";
 import AddCalendarModal from "../../AddCalendarModal";
@@ -20,7 +20,7 @@ const Month = () => {
 	console.log(month, monthData);
 	const addModalRef = useRef(null);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		console.log("event", event);
 		const weekData = monthData.day(0);
 		const arr = [];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import DayInMonth from "./DayInMonth";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCalendarModal } from "../../../reducers/settingSlice";
@@ -47,7 +47,7 @@ const WeekInMonth = (props) => {
 
 	*/
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const dayData = weekData;
 		const arr = [];
 		for (var i = 0; i < 7; i++) {
@@ -73,7 +73,7 @@ const WeekInMonth = (props) => {
 				{calendarModal.week === week && calendarModal.isClicked && (
 					<div class="w-full h-6 "></div>
 				)}
-				{/* <div class="w-full h-6  rounded-md bg-blue-300"></div> */}
+				<div class="w-full h-6  rounded-md bg-blue-300"></div>
 				{/* <div class="w-full h-6 border border-black"></div> */}
 			</div>
 		</div>
