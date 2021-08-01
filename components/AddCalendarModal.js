@@ -31,17 +31,22 @@ const AddCalendarModal = (props) => {
 	const dispatch = useDispatch();
 
 	const [calendarList, setCalendarList] = useState([]);
+	const [timeList, setTimeList] = useState([]);
 
 	const [colorModal, setColorModal] = useState(false);
 	const [calendarNameModal, setCalendarNameModal] = useState(false);
 	const [modalDate, setModalDate] = useState(dayjs());
 	const [startdateModal, setStartdateModal] = useState(false);
 	const [enddateModal, setEnddateModal] = useState(false);
+	const [startTimeModal, setStartTimeModal] = useState(false);
+	const [endTimeModal, setEndTimeModal] = useState(false);
 	// const [isAllDay, setIsAllDay] = useState(false);
 	const colorRef = useRef(null);
 	const calendarNameRef = useRef(null);
 	const startRef = useRef(null);
 	const endRef = useRef(null);
+	const startTimeRef = useRef(null);
+	const endTimeRef = useRef(null);
 	const titleRef = useRef(null);
 	const otherRef = useRef(null);
 	const dayText = ["일", "월", "화", "수", "목", "금", "토"];
@@ -59,6 +64,17 @@ const AddCalendarModal = (props) => {
 
 	useEffect(() => {
 		titleRef.current.focus();
+
+		let arr = [];
+		const day = dayjs().startOf("day");
+		for (let i = 0; i < 96; i++) {
+			const newDay = day.add(15 * i, "minute");
+			console.log(newDay.format("HH:mm"));
+
+			arr.push(newDay);
+		}
+		setTimeList(arr);
+		console.log("timeList", timeList);
 	}, []);
 
 	useEffect(() => {
@@ -184,6 +200,34 @@ const AddCalendarModal = (props) => {
 
 		return () => window.removeEventListener("click", handleClick);
 	}, [enddateModal]);
+
+	useEffect(() => {
+		if (!startTimeModal) return;
+		function handleClick(e) {
+			if (startTimeRef.current === null) {
+				return;
+			} else if (!startTimeRef.current.contains(e.target)) {
+				setStartTimeModal(false);
+			}
+		}
+		window.addEventListener("click", handleClick);
+
+		return () => window.removeEventListener("click", handleClick);
+	}, [startTimeModal]);
+
+	useEffect(() => {
+		if (!endTimeModal) return;
+		function handleClick(e) {
+			if (endTimeRef.current === null) {
+				return;
+			} else if (!endTimeRef.current.contains(e.target)) {
+				setEndTimeModal(false);
+			}
+		}
+		window.addEventListener("click", handleClick);
+
+		return () => window.removeEventListener("click", handleClick);
+	}, [endTimeModal]);
 
 	const onChangeEvent = (e, text) => {
 		console.log(text);
@@ -327,9 +371,30 @@ const AddCalendarModal = (props) => {
 									{eventInfo.type === "allDay" && (
 										<div
 											// onClick={onStartModaltoggle}
-											class="px-2 py-2 cursor-pointer hover:bg-gray-100 mx-2"
+											ref={startRef}
+											class="cursor-pointer  mx-2 relative"
 										>
-											<div>{startDate.format("HH:mm")}</div>
+											<div
+												onClick={() => setStartTimeModal(!startTimeModal)}
+												class="px-2 py-2 hover:bg-gray-100"
+											>
+												{startDate.format("HH:mm")}
+											</div>
+
+											{startTimeModal && (
+												<div class="absolute w-16 h-48 overflow-y-auto">
+													{timeList.map((element, index) => {
+														return (
+															<p
+																// onClick={() => chooseName(element)}
+																class="px-2 py-2 cursor-pointer text-sm bg-white text-gray-800 font-medium hover:bg-gray-100"
+															>
+																{element.format("HH:mm")}
+															</p>
+														);
+													})}
+												</div>
+											)}
 										</div>
 									)}
 								</div>
@@ -341,9 +406,29 @@ const AddCalendarModal = (props) => {
 									{eventInfo.type === "allDay" && (
 										<div
 											// onClick={onEndModaltoggle}
-											class="w-auto px-2 py-2 cursor-pointer hover:bg-gray-100 mx-2"
+											ref={endTimeRef}
+											class="w-auto cursor-pointer  mx-2 relative"
 										>
-											<div>{endDate.format("HH:mm")}</div>
+											<div
+												onClick={() => setEndTimeModal(!endTimeModal)}
+												class="px-2 py-2 hover:bg-gray-100"
+											>
+												{endDate.format("HH:mm")}
+											</div>
+											{endTimeModal && (
+												<div class="absolute w-16 h-48 overflow-y-auto">
+													{timeList.map((element, index) => {
+														return (
+															<p
+																// onClick={() => chooseName(element)}
+																class="px-2 py-2 cursor-pointer text-sm bg-white text-gray-800 font-medium hover:bg-gray-100"
+															>
+																{element.format("HH:mm")}
+															</p>
+														);
+													})}
+												</div>
+											)}
 										</div>
 									)}
 									<div class="px-2 py-2 cursor-pointer hover:bg-gray-100 relative">
