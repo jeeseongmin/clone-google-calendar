@@ -7,6 +7,7 @@ import TitleInput from "./input/titleInput";
 import DescriptionInput from "./input/descriptionInput";
 import { ImEnlarge } from "react-icons/im";
 import Calendar from "./Calendar";
+import { v4 as uuidv4 } from "uuid";
 
 import {
 	IoMdClose,
@@ -19,16 +20,20 @@ import { BsTextLeft } from "react-icons/bs";
 import { GiPositionMarker } from "react-icons/gi";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { BiCheck } from "react-icons/bi";
-import { setTempColor, toggleCalendarModal } from "../reducers/settingSlice";
-import Default from "../public/image/default-img.png";
-import Elephant from "../public/image/elephant.jpg";
-import Giraffe from "../public/image/giraffe.jpg";
-import Dog1 from "../public/image/dog1.jpeg";
-import Dog2 from "../public/image/dog2.jpg";
+import {
+	setTempColor,
+	toggleCalendarModal,
+	updateStartDate,
+	updateEndDate,
+} from "../reducers/settingSlice";
+import { addEvent } from "../reducers/eventSlice";
+import { addUserEvent } from "../reducers/userSlice";
 import { HiCheck } from "react-icons/hi";
 
 const AddCalendarModal = (props) => {
 	const dispatch = useDispatch();
+
+	const totalEvent = useSelector((state) => state.event.event);
 
 	const [calendarList, setCalendarList] = useState([]);
 	const [timeList, setTimeList] = useState([]);
@@ -69,16 +74,13 @@ const AddCalendarModal = (props) => {
 		const day = dayjs().startOf("day");
 		for (let i = 0; i < 96; i++) {
 			const newDay = day.add(15 * i, "minute");
-			console.log(newDay.format("HH:mm"));
 
 			arr.push(newDay);
 		}
 		setTimeList(arr);
-		console.log("timeList", timeList);
 	}, []);
 
 	useEffect(() => {
-		// console.log("mycalendar List", Object.keys(currentUser.myCalender));
 		setCalendarList(Object.keys(currentUser.myCalendar));
 	}, []);
 
@@ -95,7 +97,6 @@ const AddCalendarModal = (props) => {
 	};
 
 	const onToggleAllDay = () => {
-		console.log("onToggleAllDay");
 		const cp = { ...eventInfo };
 		if (cp.type === "allDay") {
 			cp.type = "default";
@@ -125,7 +126,6 @@ const AddCalendarModal = (props) => {
 		title: "",
 		type: "allDay",
 		description: "",
-		participants: {},
 		period: {
 			start: dayjs().startOf("day"),
 			end: dayjs().startOf("day"),
@@ -135,7 +135,7 @@ const AddCalendarModal = (props) => {
 			myCalendar: Object.keys(currentUser.myCalendar)[0],
 		},
 		color: currentUser.myCalendar[Object.keys(currentUser.myCalendar)[0]].color,
-		participants: [currentUser.uuid],
+		participants: {},
 		repeat: {
 			type: "none",
 			day: [],
@@ -144,6 +144,16 @@ const AddCalendarModal = (props) => {
 			deleted: {},
 		},
 	});
+	useEffect(() => {
+		const cp = { ...eventInfo };
+		const obj = {};
+		obj[currentUser.uuid] = {
+			isRequire: true,
+			status: "accept",
+		};
+		cp.participants = obj;
+		setEventInfo(cp);
+	}, []);
 
 	useEffect(() => {
 		if (!colorModal) return;
@@ -230,12 +240,10 @@ const AddCalendarModal = (props) => {
 	}, [endTimeModal]);
 
 	const onChangeEvent = (e, text) => {
-		console.log(text);
 		const cp = { ...eventInfo };
 		if (text === "title" || text === "description") cp[text] = e.target.value;
 		else if (text === "start" || text === "end")
 			cp.period[text] = e.target.value;
-		console.log(cp);
 		setEventInfo(cp);
 	};
 
@@ -250,7 +258,38 @@ const AddCalendarModal = (props) => {
 		const cp = { ...eventInfo };
 		cp.host.myCalendar = uid;
 		setEventInfo(cp);
-		console.log(eventInfo);
+	};
+
+	const chooseTime = (type, date) => {
+		if (type === "start") {
+			const start = startDate;
+			const day = start
+				.startOf("day")
+				.add(date.hour(), "hour")
+				.add(date.minute(), "minute");
+			dispatch(updateStartDate(day));
+			const cp = { ...eventInfo };
+			const time = cp.period.start
+				.startOf("day")
+				.add(date.hour(), "hour")
+				.add(date.minute(), "minute");
+			cp.period.start = time;
+			setEventInfo(cp);
+		} else if (type === "end") {
+			const end = endDate;
+			const day = end
+				.startOf("day")
+				.add(date.hour(), "hour")
+				.add(date.minute(), "minute");
+			dispatch(updateEndDate(day));
+			const cp = { ...eventInfo };
+			const time = cp.period.end
+				.startOf("day")
+				.add(date.hour(), "hour")
+				.add(date.minute(), "minute");
+			cp.period.end = time;
+			setEventInfo(cp);
+		}
 	};
 
 	const onCloseModal = () => {
@@ -261,6 +300,50 @@ const AddCalendarModal = (props) => {
 				date: null,
 			})
 		);
+	};
+
+	const onSubmitEvent = () => {
+		console.log("onSubmitEvent");
+		console.log(eventInfo);
+		const event_uuid = uuidv4();
+		const Event = {
+			title: eventInfo.title,
+			description: eventInfo.description,
+			period: eventInfo.period,
+			type: eventInfo.type,
+			participants: eventInfo.participants,
+			host: eventInfo.host,
+			color: eventInfo.color,
+			created: dayjs(),
+			deleted: null,
+			authority: ["view"],
+		};
+		dispatch(addEvent({ event: Event, event_uuid: event_uuid }));
+
+		const UserEvent = {
+			title: eventInfo.title,
+			description: eventInfo.description,
+			color: eventInfo.color,
+			isDeleted: false,
+			rejected: {},
+		};
+		dispatch(
+			addUserEvent({
+				user: currentUser.uuid,
+				event: UserEvent,
+				event_uuid: event_uuid,
+			})
+		);
+
+		console.log("finish!");
+		console.log(totalEvent);
+		console.log(user);
+		const payload = {
+			isClicked: false,
+			week: null,
+			date: null,
+		};
+		dispatch(toggleCalendarModal(payload));
 	};
 
 	// 모달창 위치
@@ -368,10 +451,10 @@ const AddCalendarModal = (props) => {
 											</div>
 										)}
 									</div>
-									{eventInfo.type === "allDay" && (
+									{eventInfo.type !== "allDay" && (
 										<div
 											// onClick={onStartModaltoggle}
-											ref={startRef}
+											ref={startTimeRef}
 											class="cursor-pointer  mx-2 relative"
 										>
 											<div
@@ -386,7 +469,7 @@ const AddCalendarModal = (props) => {
 													{timeList.map((element, index) => {
 														return (
 															<p
-																// onClick={() => chooseName(element)}
+																onClick={() => chooseTime("start", element)}
 																class="px-2 py-2 cursor-pointer text-sm bg-white text-gray-800 font-medium hover:bg-gray-100"
 															>
 																{element.format("HH:mm")}
@@ -403,7 +486,7 @@ const AddCalendarModal = (props) => {
 									ref={endRef}
 									class="w-auto relative flex flex-row items-center text-xs"
 								>
-									{eventInfo.type === "allDay" && (
+									{eventInfo.type !== "allDay" && (
 										<div
 											// onClick={onEndModaltoggle}
 											ref={endTimeRef}
@@ -420,7 +503,7 @@ const AddCalendarModal = (props) => {
 													{timeList.map((element, index) => {
 														return (
 															<p
-																// onClick={() => chooseName(element)}
+																onClick={() => chooseTime("end", element)}
 																class="px-2 py-2 cursor-pointer text-sm bg-white text-gray-800 font-medium hover:bg-gray-100"
 															>
 																{element.format("HH:mm")}
@@ -631,6 +714,14 @@ const AddCalendarModal = (props) => {
 							)}
 						</div>
 						<div ref={otherRef}></div>
+					</div>
+					<div class="pr-4 mt-2 mb-4 w-full flex flex-row justify-end items-center">
+						<div
+							onClick={onSubmitEvent}
+							class="cursor-pointer px-4 py-2 text-white text-sm rounded-md bg-blue-400"
+						>
+							저장
+						</div>
 					</div>
 				</div>
 			</div>

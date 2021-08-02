@@ -21,7 +21,6 @@ const Month = () => {
 	const addModalRef = useRef(null);
 
 	useEffect(() => {
-		console.log("event", event);
 		const weekData = monthData.day(0);
 		const arr = [];
 		for (var i = 0; i < 5; i++) {

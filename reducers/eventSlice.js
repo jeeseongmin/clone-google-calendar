@@ -18,7 +18,7 @@ export const eventSlice = createSlice({
 		},
 		// 새로운 Event 추가
 		addEvent: (state, action) => {
-			const event_key = uuidv4();
+			const event_key = action.payload.event_uuid;
 			const event = action.payload.event;
 			state.event[event_key] = event;
 		},

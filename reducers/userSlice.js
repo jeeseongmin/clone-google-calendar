@@ -21,20 +21,20 @@ export const userSlice = createSlice({
 			state.user[key] = obj;
 		},
 		// 일정을 추가할 때 혹은 초대될 때
-		addEvent: (state, action) => {
-			const event_key = uuidv4();
+		addUserEvent: (state, action) => {
+			const event_key = action.payload.event_uuid;
 			const user_key = action.payload.user;
 			const event = action.payload.event;
 			state.user[user_key].event[event_key] = event;
 		},
-		updateEvent: (state, action) => {
+		updateUserEvent: (state, action) => {
 			const event_key = action.payload.event_key;
 			const user_key = action.payload.user;
 			const event = action.payload.event;
 			state.user[user_key].event[event_key].title = event.title;
 			state.user[user_key].event[event_key].description = event.description;
 		},
-		deleteEvent: (state, action) => {
+		deleteUserEvent: (state, action) => {
 			const event_key = action.payload.event_key;
 			const user_key = action.payload.user;
 			state.user[user_key].event[event_key].isDeleted = true;
@@ -82,9 +82,9 @@ export const userSlice = createSlice({
 export const {
 	setUser,
 	addUser,
-	addEvent,
-	updateEvent,
-	deleteEvent,
+	addUserEvent,
+	updateUserEvent,
+	deleteUserEvent,
 	rejectEvent,
 	addMyCalendar,
 	deleteMyCalendar,

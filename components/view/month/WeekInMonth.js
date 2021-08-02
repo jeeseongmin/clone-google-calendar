@@ -2,23 +2,22 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import DayInMonth from "./DayInMonth";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCalendarModal } from "../../../reducers/settingSlice";
+import dayjs from "dayjs";
 
 const WeekInMonth = (props) => {
 	const dispatch = useDispatch();
+	const eventList = useState([]);
 	const currentUser = useSelector((state) => state.setting.currentUser);
 	const calendarModal = useSelector((state) => state.setting.calendarModal);
-	console.log(calendarModal);
+	const event = useSelector((state) => state.setting.event);
 	const user = useSelector((state) => state.user.user);
 	const userInfo = user[currentUser.uuid];
 	const week = props.week;
 	const myEvent = userInfo.event;
-	console.log("myEvent", myEvent);
 	const [dayArr, setDayArr] = useState([]);
 
 	const weekData = props.weekData;
 	const month = props.month;
-	const weekStart = weekData.day(0).date();
-	const weekEnd = weekData.day(7).date();
 
 	/* 
 		* 필터링하기.
@@ -36,16 +35,30 @@ const WeekInMonth = (props) => {
 
 		* 정렬하기
 
-		
-
-
 		종일 이벤트 일 때 (type === allDay)
 		2. weekStart보다 period.start가 
 		1. 먼저 이번주 안에 있는지 확인.
 
-
-
 	*/
+
+	/*
+		1. 한 주의 시작 날짜와 끝 날짜를 정해놓는다.
+		2. 일단 이벤트를 created에 따라 정렬한다.
+		3. 종일 이벤트와 기본 이벤트를 분리한 뒤에, 종일 이벤트 -> 기본 이벤트 순서대로 배열에 넣는다.
+		4. 
+	*/
+
+	useLayoutEffect(() => {
+		const arr = user[currentUser.uuid].event;
+		console.log("eventList - week", arr);
+		if (dayjs() > dayjs().subtract(1, "month")) {
+			console.log("true");
+		} else {
+			console.log("false");
+		}
+		const start = weekData;
+		const end = weekData.add(6, "day");
+	}, []);
 
 	useLayoutEffect(() => {
 		const dayData = weekData;
@@ -73,7 +86,7 @@ const WeekInMonth = (props) => {
 				{calendarModal.week === week && calendarModal.isClicked && (
 					<div class="w-full h-6 "></div>
 				)}
-				<div class="w-full h-6  rounded-md bg-blue-300"></div>
+				{/* <div class="w-full h-6  rounded-md bg-blue-300"></div> */}
 				{/* <div class="w-full h-6 border border-black"></div> */}
 			</div>
 		</div>
