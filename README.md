@@ -17,13 +17,23 @@
 
 - **Login**
 
+  ![login](https://user-images.githubusercontent.com/47960777/128506128-5eab30fa-7f89-4d7f-af35-e33ed72dc406.png)
+
   - 소셜 로그인을 구성했지만, 사기 사이트 위험때문에 임시 삭제 해놓은 상태입니다.
   - 현재는 `default user`의 정보(Tom, Steve, Pery, Bucky)로 로그인하게 되어있습니다.
 
-- **Main**
+- **main**
 
   - 기본 Google Calendar의 ui/ux를 그대로 clone해본 메인페이지입니다.
   - Year, Month, Week, Day view를 구성 예정인 상태이고, 현재는 Year, Month view만 구성되어있는 상태입니다.
+
+  ![yearView](https://user-images.githubusercontent.com/47960777/128506152-4405e29f-97b6-4cd2-9900-72756e4e2ede.png)
+
+  **year view**
+
+  ![monthView](https://user-images.githubusercontent.com/47960777/128506179-8180b806-08e1-4278-8c4c-4c0453dfe371.png)
+
+  **month view**
 
 ### 3. 기능
 
